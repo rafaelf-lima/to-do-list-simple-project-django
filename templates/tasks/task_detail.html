@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Detalhes da Tarefa{% endblock %}
+{% block content %}
+    <h1 class="title">{{ task.title }}</h1>
+    <p>{{ task.description }}</p>
+    <p><strong>Criada em:</strong> {{ task.created_at }}</p>
+    <p><strong>Status:</strong> {{ task.completed|yesno:"Concluída,Pendente" }}</p>
+    
+    <a href="{% url 'task_update' task.id %}" class="button is-link">Editar</a>
+    <a href="{% url 'task_delete' task.id %}" class="button is-danger">Excluir</a>
+{% endblock %}

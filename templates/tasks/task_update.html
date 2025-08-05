@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Editar Tarefa{% endblock %}
+
+{% block content %}
+  <h1 class="title">Editar Tarefa: {{ task.title }}</h1>
+
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="button is-warning">Atualizar</button>
+  </form>
+{% endblock %}

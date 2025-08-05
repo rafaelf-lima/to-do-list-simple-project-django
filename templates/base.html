@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block page_title %}To-Do List{% endblock %} | Meu Site</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
+</head>
+<body class="has-background-light">
+
+    <nav class="navbar is-primary has-shadow" role="navigation" aria-label="main navigation">
+        <div class="container">
+            <div class="navbar-brand">
+                <a class="navbar-item has-text-weight-bold" href="{% url 'task_list' %}">
+                    To-Do App
+                </a>
+
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+
+            <div id="navbarMenu" class="navbar-menu">
+                <div class="navbar-start">
+                    {% if user.is_authenticated %}
+                        <a class="navbar-item" href="{% url 'task_list' %}">
+                            Minhas Tarefas
+                        </a>
+                        <a class="navbar-item" href="{% url 'task_create' %}">
+                            Nova Tarefa
+                        </a>
+                    {% endif %}
+                </div>
+
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            {% if user.is_authenticated %}
+                                <span class="navbar-item">Olá, {{ user.username }}!</span>
+                                <a class="button is-danger" href="{% url 'accounts:logout' %}">
+                                    <strong>Sair</strong>
+                                </a>
+                            {% else %}
+                                <a class="button is-primary" href="{% url 'accounts:register' %}">
+                                    <strong>Registrar</strong>
+                                </a>
+                                <a class="button is-light" href="{% url 'accounts:login' %}">
+                                    Entrar
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero is-info is-bold is-small">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    {% block content_title %}{% endblock %}
+                </h1>
+                <h2 class="subtitle">
+                    {% block content_subtitle %}{% endblock %}
+                </h2>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section">
+        <div class="container">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+            if ($navbarBurgers.length > 0) {
+                $navbarBurgers.forEach(el => {
+                    el.addEventListener('click', () => {
+                        const target = el.dataset.target;
+                        const $target = document.getElementById(target);
+                        el.classList.toggle('is-active');
+                        $target.classList.toggle('is-active');
+                    });
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

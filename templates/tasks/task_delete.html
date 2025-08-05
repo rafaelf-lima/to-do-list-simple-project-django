@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Excluir Tarefa{% endblock %}
+{% block content %}
+    <h1 class="title">Você tem certeza que deseja excluir "{{ task.title }}"?</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="button is-danger">Sim, excluir</button>
+        <a href="{% url 'task_detail' task.id %}" class="button">Cancelar</a>
+    </form>
+{% endblock %}
